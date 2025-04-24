@@ -8,6 +8,13 @@ DATABASE_ID = os.environ["DATABASE_ID"]
 
 def run_compliance():
     try:
+        # Try retrieving the database to test access
+        response = notion.databases.retrieve(database_id=DATABASE_ID)
+        print("Successfully connected to database.")
+        print("Database structure:")
+        print(response)
+
+        # Optional: continue with compliance logic if access succeeds
         results = notion.databases.query(database_id=DATABASE_ID)
         for page in results["results"]:
             props = page["properties"]
@@ -53,11 +60,13 @@ def run_compliance():
                         }
                     }
                 )
+
         return True
+
     except Exception as e:
         import traceback
-        print("=== ERROR DETAILS ===")
+        print("=== FULL ERROR TRACEBACK ===")
         traceback.print_exc()
-        print("Error object:", e)
+        print("Raw error message:", str(e))
         return False
 

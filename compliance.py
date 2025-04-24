@@ -55,5 +55,9 @@ def run_compliance():
                 )
         return True
     except Exception as e:
-        print("Error:", e)
+        import traceback
+        print("=== ERROR DETAILS ===")
+        traceback.print_exc()
+        print("Error object:", e)
         return False
+
